@@ -21,13 +21,16 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+a1 = [ones(m, 1) X]; % Add bias: 5000x400 -> 5000x401 
 
+z2 = Theta1 * a1'; % 25x401 * 401x5000 -> 25x5000
+a2 = sigmoid(z2);
+a2 = [ones(m, 1) a2'];
 
+z3 = Theta2 * a2'; % 10x26 * 26x5000 -> 10x5000
+a3 = sigmoid(z3)'; % 5000x10
 
-
-
-
-
+[~, p] = max(a3, [], 2);
 
 % =========================================================================
 
