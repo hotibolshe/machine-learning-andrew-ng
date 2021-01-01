@@ -15,11 +15,11 @@ reg = lambda / (2* m) * sum(except_first_theta .^ 2);
 
 J = 1 / m * sum(pos + neg) + reg;
 
-error = h - y;
+cost = h - y;
 except_first_ones = ones(length(theta), 1);
 except_first_ones(1) = 0; % Regularize all but first '1' parameter
 
-grad = (X' * error) / m + theta .* (except_first_ones * lambda / m);
+grad = 1/m * (X' * cost) + theta .* (except_first_ones * lambda / m);
 
 end
 
