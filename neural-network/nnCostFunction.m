@@ -64,9 +64,9 @@ Theta2_grad = zeros(size(Theta2));
 
  a1 = [ones(m, 1) X]; % Add bias: 5000x400 -> 5000x401                           
  
- z2 = Theta1 * a1'; % 25x401 * 401x5000 -> 25x5000                               
- a2 = sigmoid(z2);                                                               
- a2 = [ones(m, 1) a2'];                                                          
+ z2 = (Theta1 * a1')'; % 25x401 * 401x5000 -> 25x5000                               
+ a2 = sigmoid(z2);                                                       
+ a2 = [ones(m, 1) a2];                                                          
  
  z3 = Theta2 * a2'; % 10x26 * 26x5000 -> 10x5000                                 
  a3 = sigmoid(z3)'; % 5000x10, y = 5000x1
@@ -93,12 +93,21 @@ Theta2_grad = zeros(size(Theta2));
  r = (lambda / (2 * m)) * (T1_total + T2_total);
  J = J + r;
  
- % [~, p] = max(a3, [], 2);
- % J = mean(p - y);
-
-
-
-
+ % Backpropagation
+ delta3 = a3 - Y;
+ delta2 = delta3 * Theta2(:, 2:end) .* sigmoidGradient(z2);
+ Delta2 = delta3' * a2;
+ Delta1 = delta2' * a1;
+ 
+ Theta1_grad = Delta1 / m;
+ Theta2_grad = Delta2 / m;
+ 
+ % Regularization
+ lr1 = Theta1 .* (lambda / m);
+ Theta1_grad = Theta1_grad + [zeros(size(Theta1, 1), 1) lr1(:, 2:end)];
+ 
+ lr2 = Theta2 .* (lambda / m);
+ Theta2_grad = Theta2_grad + [zeros(size(Theta2, 1), 1) lr2(:, 2:end)];
 
 
 
