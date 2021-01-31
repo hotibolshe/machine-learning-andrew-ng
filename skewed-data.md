@@ -47,4 +47,13 @@ In that case - 10 + 976 / 1000 = 98.6% - Quite high, huh!
 ## Decreasing threshold -> call more positives (decrease the chance of missing positive) -> decrease of false negatives (increase of *recall*) -> increase of true positives (decrease of *precision*)
 
 
+# Precision/Recall example
+## y=1, spam, m=1%
+## y=0, not-spam, m=99%
+## If always predict not-spam, accuracy = 99%
+## If always predict not-spam, recall = 0%
+## If always predict spam, recall = 100%, precision = 1%
+
+
+
 
